@@ -1,0 +1,7 @@
+POST http://localhost:8090/api/v1/ai/chat
+Authorization: Bearer Demo-AI
+Content-Type: application/x-www-form-urlencoded
+
+content=告警CPU超过阈值&rule_id=2&rule_name=CPU告警&deep=1&search_ql=*
+
+# {"content": "告警CPU超过阈值", "ruleId": "1", "ruleName": "CPU告警", "deep": "1", "searchQL": "*"}

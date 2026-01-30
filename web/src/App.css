@@ -1,0 +1,32 @@
+.App {
+  min-height: 100vh;
+  padding: 20px 0;
+}
+
+.App h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 30px;
+}
+
+.main-layout {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.left-panel {
+  flex: 1;
+  min-width: 0;
+}
+
+.right-panel {
+  flex: 2;
+  min-width: 0;
+}
+
+@media (max-width: 768px) {
+  .main-layout {
+    flex-direction: column;
+  }
+}

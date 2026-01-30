@@ -1,0 +1,71 @@
+version: "3"
+services:
+  ai-model-service:
+    container_name: ai-model-service
+    image: docker.io/sword-fisher/ai-model-service:latest
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - ../../config/config.yaml:/app/config/config.yaml
+    restart: always
+    privileged: true
+    ports:
+      - "8090:8090"
+    healthcheck:
+      test: ["CMD", "wget", "-O", "-", "http://localhost:8090/hello"]
+      interval: 5s
+      timeout: 2s
+      retries: 10
+    depends_on:
+      - ai-mysql
+    networks:
+      - ai-model
+
+  ai-model-web:
+    container_name: ai-model-web
+    image: docker.io/sword-fisher/ai-model-web:latest
+    environment:
+      - TZ=Asia/Shanghai
+    restart: always
+    privileged: true
+    ports:
+      - "80:80"
+    networks:
+      - ai-model
+
+  ai-mysql:
+    container_name: ai-mysql
+    image: mysql:8.0
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql:/var/lib/mysql
+    environment:
+      - TZ=Asia/Shanghai
+      - MYSQL_ROOT_PASSWORD=1q2w3e4r
+      - MYSQL_DATABASE=aimodel
+    restart: always
+    networks:
+      - ai-model
+
+  # init-mysql:
+  #   container_name: init-mysql
+  #   image: mysql:8.0
+  #   volumes:
+  #     -  ../helmchart/files/sql:/sql
+  #   environment:
+  #     - TZ=Asia/Shanghai
+  #     - MYSQL_HOST=ai-mysql
+  #     - MYSQL_USERNAME=root
+  #     - MYSQL_PASSWORD=1q2w3e4r
+  #     - MYSQL_DATABASE=aimodel
+  #   restart: on-failure
+  #   command: ["sh", "-c", "chmod +x /sql/auto_import.sh; /sql/auto_import.sh"]
+  #   depends_on:
+  #     - ai-mysql
+  #   networks:
+  #     - ai-model
+
+networks:
+  ai-model:
+    driver: bridge
