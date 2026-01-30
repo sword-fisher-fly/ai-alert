@@ -10,8 +10,8 @@ build-linux:
 
 
 build-web:
-    cd web && npm install && npm run build
-    rm -rf internal/static/dist && mkdir -p internal/static/dist
+	cd web && npm install && npm run build
+	rm -rf internal/static/dist && mkdir -p internal/static/dist
     cp -rf web/build/* internal/static/dist
 
 lint:

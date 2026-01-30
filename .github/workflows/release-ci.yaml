@@ -43,15 +43,9 @@ jobs:
 
       - name: Build with Cross-Compilation
         run: |
-          export GOOS=${{ matrix.os }}
-          export GOARCH=${{ matrix.arch }}
-          
-          BINARY_NAME="ai-alert"
-          if [ "${{ matrix.os }}" = "windows" ]; then
-            BINARY_NAME="ai-alert.exe"
-          fi
-          
+          go env
           make build
+
 
           mkdir -p release
           mv ./$BINARY_NAME ./release/
