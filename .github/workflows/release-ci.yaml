@@ -14,22 +14,10 @@ on:
      
 jobs:
   build-and-release:
-    name: Build for ${{ matrix.os }}-${{ matrix.arch }}
+    name: Build AI Alert
     runs-on: ubuntu-latest
     permissions:
       contents: write
-    strategy:
-      matrix:
-        include:
-          - os: linux
-            arch: amd64
-            artifact_name: linux-amd64
-          - os: windows
-            arch: amd64
-            artifact_name: windows-amd64
-          - os: darwin
-            arch: arm64
-            artifact_name: darwin-arm64
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -47,9 +35,8 @@ jobs:
           go env
           make build
 
-
           mkdir -p release
-          mv ./$BINARY_NAME ./release/
+          mv ./bin/$BINARY_NAME ./release/
           cp ./config/config.yaml ./release/
           ls -la ./release/
 
@@ -62,7 +49,7 @@ jobs:
             TAG_NAME="dev-${SHORT_HASH}"
           fi
           
-          FILENAME="ai-alert-${TAG_NAME}-${{ matrix.artifact_name }}.tar.gz"
+          FILENAME="ai-alert-${TAG_NAME}.tar.gz"
           
           cd release
           tar -czf ../$FILENAME *
@@ -85,10 +72,8 @@ jobs:
             
             ---
             ### 🛠 Build Info
-            * **Platform**: ${{ matrix.os }}
-            * **Arch**: ${{ matrix.arch }}
             * **Filename**: `${{ steps.package.outputs.filename }}`
-          note: "Artifact for ${{ matrix.os }} (${{ matrix.arch }}) is included."
+          note: "Artifact has been built with Go $(go version)."
           tag_name: ${{ github.event.inputs.release_version || github.ref_name }}
           files: ${{ steps.package.outputs.filename }}
           append_body: true
