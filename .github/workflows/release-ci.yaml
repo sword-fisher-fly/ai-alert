@@ -36,7 +36,7 @@ jobs:
           make build
 
           mkdir -p release
-          mv ./bin/$BINARY_NAME ./release/
+          mv ./bin/* ./release/
           cp ./config/config.yaml ./release/
           ls -la ./release/
 
