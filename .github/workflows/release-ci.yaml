@@ -34,7 +34,8 @@ jobs:
         run: |
           go env
           make build
-
+          ls -lh ./bin
+          ls -lh ./internal/static/dist
           mkdir -p release
           mv ./bin/* ./release/
           cp ./config/config.yaml ./release/
