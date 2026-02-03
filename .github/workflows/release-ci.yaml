@@ -48,20 +48,10 @@ jobs:
 
       - name: Build with Cross-Compilation
         run: |
-          go env
-          mkdir -p ./bin
-          echo "=== Starting make build ==="
-          if ! make build; then
-            echo "=== make build FAILED ==="
-            exit 1
-          fi
-          echo "=== make build SUCCEEDED ==="
-          pwd
-          ls -lh ./
-          ls -lh ./internal/static/dist
+          make build
           mkdir -p release
           mv ./bin/* ./release/
-          cp ./config/config.yaml ./release/
+          cp -rf ./config ./release/
           ls -la ./release/
 
       - name: Package Artifacts
