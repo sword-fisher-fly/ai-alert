@@ -44,7 +44,7 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('web/package-lock.json') }}
           # 回退key：若当前key不存在，使用同系统的最新Node缓存（可选）
           restore-keys: |
-            ${{ runner.os }}-node-
+            ${{ runner.os }}-node-${{ hashFiles('web/package-lock.json') }}
 
       - name: Build with Cross-Compilation
         run: |
