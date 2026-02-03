@@ -59,6 +59,7 @@ rm -rf internal/static/dist && mkdir -p internal/static/dist
 ```
 浏览器地址输入http://localhost:8090
 ```
+![ai-alert-analysis](docs/img/ai-alert-analysis.png)
 
 ***表单填充***
 
