@@ -34,6 +34,12 @@ jobs:
         run: |
           go env
           mkdir -p ./bin
+          echo "=== Starting make build ==="
+          if ! make build; then
+            echo "=== make build FAILED ==="
+            exit 1
+          fi
+          echo "=== make build SUCCEEDED ==="
           make build
           pwd
           ls -lh ./bin
