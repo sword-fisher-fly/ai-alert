@@ -3,12 +3,14 @@ default: build
 build: build-web build-linux build-windows 
 
 build-windows:
-	@echo 'Build window binary' 
-    CGO_ENABLED=0 GOARCH=amd64 GOOS=windows go build -o bin/ai-alert.exe cmd/ai-model/main.go
+	@echo 'Build window binary $(shell pwd)' 
+    CGO_ENABLED=0 GOARCH=amd64 GOOS=windows go build -o ./bin/ai-alert.exe ./cmd/ai-model/main.go
+	CGO_ENABLED=0 GOARCH=amd64 GOOS=windows go build -o ai-alert.exe ./cmd/ai-model/main.go
 
 build-linux:
-	@echo 'Build linux binary'
-    CGO_ENABLED=0 GOARCH=amd64 GOOS=linux go build -o bin/ai-alert.linux cmd/ai-model/main.go
+	@echo 'Build linux binary $(shell pwd)'
+    CGO_ENABLED=0 GOARCH=amd64 GOOS=linux go build -o ./bin/ai-alert.linux ./cmd/ai-model/main.go
+	CGO_ENABLED=0 GOARCH=amd64 GOOS=linux go build -o ai-alert.linux ./cmd/ai-model/main.go
 
 
 build-web:
